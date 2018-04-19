@@ -14,47 +14,6 @@
         </style>
     </metal:css>
 
-    <metal:js fill-slot="javascript_head_slot">
-        <script type="text/javascript">
-
-(function($) {
-    $(document).ready(function() {
-        var cookieconsent = getCookieValue('cookieconsent').indexOf('true')>-1 ? true : false,
-            $form = $('#optout-form');
-
-        // Enable form save
-        $form.find('input[name="Save"]').attr('disabled', null);
-        // Enable cookie consent main radios
-        $('#global-optput input').each(function() {
-            $(this).attr('disabled', null);
-        })
-
-        // Cookie consent disabled
-        if (!cookieconsent) {
-            $('#reject_cookies').attr('checked', 'checked');
-            $('.optoutRejCommand').attr('checked', 'checked');
-        } else {
-            // Cookie consent enabled
-            $('#accept_cookies').attr('checked', 'checked');
-            $('.customOptOuts input').attr('disabled', null);
-        }
-
-        $('.optoutAction').each(function() {
-            var $this = $(this),
-                optoutCookieVal = getCookieValue($this.attr('data-optout') +  '-optout');
-            if (optoutCookieVal.indexOf('true')>-1) {
-                $(this).find('.optoutRejCommand').attr('checked', 'checked');
-            } else if (optoutCookieVal.indexOf('false')>-1) {
-                $(this).find('.optoutGrantCommand').attr('checked', 'checked');
-            }
-
-        });
-
-    });
-})(jQuery);
-
-        </script>
-    </metal:js>
 </head>
 
 <body>
@@ -129,6 +88,45 @@
                i18n:domain="plone" i18n:attributes="value" disabled="disabled" />
     </form>
 
+        <script type="text/javascript">
+
+(function($) {
+    $(document).ready(function() {
+        var cookieconsent = getCookieValue('cookieconsent').indexOf('true')>-1 ? true : false,
+            $form = $('#optout-form');
+
+        // Enable form save
+        $form.find('input[name="Save"]').attr('disabled', null);
+        // Enable cookie consent main radios
+        $('#global-optput input').each(function() {
+            $(this).attr('disabled', null);
+        })
+
+        // Cookie consent disabled
+        if (!cookieconsent) {
+            $('#reject_cookies').attr('checked', 'checked');
+            $('.optoutRejCommand').attr('checked', 'checked');
+        } else {
+            // Cookie consent enabled
+            $('#accept_cookies').attr('checked', 'checked');
+            $('.customOptOuts input').attr('disabled', null);
+        }
+
+        $('.optoutAction').each(function() {
+            var $this = $(this),
+                optoutCookieVal = getCookieValue($this.attr('data-optout') +  '-optout');
+            if (optoutCookieVal.indexOf('true')>-1) {
+                $(this).find('.optoutRejCommand').attr('checked', 'checked');
+            } else if (optoutCookieVal.indexOf('false')>-1) {
+                $(this).find('.optoutGrantCommand').attr('checked', 'checked');
+            }
+
+        });
+
+    });
+})(jQuery);
+
+        </script>
     </metal:content-core>
 </metal:content-core>
 
