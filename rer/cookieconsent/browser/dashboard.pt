@@ -6,6 +6,50 @@
       i18n:domain="rer.cookieconsent">
 
 <head>
+     <metal:js fill-slot="javascript_head_slot">
+        <div id="rer_cc_js">
+            <script>
+     $(function() {
+
+        var cookieconsent = getCookieValue('cookieconsent').indexOf('true')>-1 ? true : false,
+            $form = $('#optout-form');
+
+        // Enable form save
+        $form.find('input[name="Save"]').attr('disabled', null);
+        // Enable cookie consent main radios
+        $('#global-optput input').each(function() {
+            $(this).attr('disabled', null);
+        })
+
+        // Cookie consent disabled
+        if (!cookieconsent) {
+            $('#reject_cookies').attr('checked', 'checked');
+            $('.optoutRejCommand').attr('checked', 'checked');
+        } else {
+            // Cookie consent enabled
+            $('#accept_cookies').attr('checked', 'checked');
+            $('.customOptOuts input').attr('disabled', null);
+        }
+
+        $('.optoutAction').each(function() {
+
+            var $this = $(this),
+                optoutCookieVal = getCookieValue($this.attr('data-optout') +  '-optout');
+            console.log(document.cookie);
+            console.log($this.attr('data-optout'));
+            console.log(optoutCookieVal);
+            if (optoutCookieVal.indexOf('true')>-1) {
+                $(this).find('.optoutRejCommand').attr('checked', 'checked');
+            } else if (optoutCookieVal.indexOf('false')>-1) {
+                $(this).find('.optoutGrantCommand').attr('checked', 'checked');
+            }
+
+        });
+
+    });
+         </script>
+                     </div>
+     </metal:js>
     <metal:css fill-slot="style_slot">
         <style type="text/css">
 
@@ -22,6 +66,8 @@
     <metal:content-title define-macro="content-title">
         <h1 class="documentFirstHeading"
             i18n:translate="">Cookies preferences for this site</h1>
+
+
     </metal:content-title>
 </metal:content-title>
 
@@ -34,7 +80,6 @@
 </metal:content-description>
 
 <metal:content-core fill-slot="content-core">
-    <metal:content-core define-macro="content-core">
 
     <form id="optout-form" method="post" action=""
           tal:attributes="action string:${context/absolute_url}/@@${view/__name__}"
@@ -88,46 +133,6 @@
                i18n:domain="plone" i18n:attributes="value" disabled="disabled" />
     </form>
 
-        <script type="text/javascript">
-
-(function($) {
-    $(document).ready(function() {
-        var cookieconsent = getCookieValue('cookieconsent').indexOf('true')>-1 ? true : false,
-            $form = $('#optout-form');
-
-        // Enable form save
-        $form.find('input[name="Save"]').attr('disabled', null);
-        // Enable cookie consent main radios
-        $('#global-optput input').each(function() {
-            $(this).attr('disabled', null);
-        })
-
-        // Cookie consent disabled
-        if (!cookieconsent) {
-            $('#reject_cookies').attr('checked', 'checked');
-            $('.optoutRejCommand').attr('checked', 'checked');
-        } else {
-            // Cookie consent enabled
-            $('#accept_cookies').attr('checked', 'checked');
-            $('.customOptOuts input').attr('disabled', null);
-        }
-
-        $('.optoutAction').each(function() {
-            var $this = $(this),
-                optoutCookieVal = getCookieValue($this.attr('data-optout') +  '-optout');
-            if (optoutCookieVal.indexOf('true')>-1) {
-                $(this).find('.optoutRejCommand').attr('checked', 'checked');
-            } else if (optoutCookieVal.indexOf('false')>-1) {
-                $(this).find('.optoutGrantCommand').attr('checked', 'checked');
-            }
-
-        });
-
-    });
-})(jQuery);
-
-        </script>
-    </metal:content-core>
 </metal:content-core>
 
 </body>
