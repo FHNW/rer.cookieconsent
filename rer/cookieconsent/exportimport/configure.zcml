@@ -14,7 +14,7 @@
         title="RER: Cookies Consent"
         description="Import cookies consent configuration"
         handler=".handlers.importCookieConsentSettings">
-        <depends name="registry.xml"/>
+        <depends name="plone.app.registry"/>
     </genericsetup:importStep>
 
     <!--genericsetup:exportStep
