@@ -10,7 +10,11 @@ from rer.cookieconsent.interfaces import ICookieConsentLayer
 from rer.cookieconsent.utils import setCookie
 from zope.component import queryUtility
 
-import urlparse
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 
 
 # @adapter(IPubSuccess)

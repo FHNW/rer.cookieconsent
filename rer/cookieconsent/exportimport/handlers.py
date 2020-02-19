@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from zope.interface import implements
+from zope.interface import implementer
 from zope.component import adapts
 from zope.component import getSiteManager
 from zope.component import queryMultiAdapter
@@ -18,10 +18,10 @@ from rer.cookieconsent.controlpanel.interfaces import OptOutEntrySubitem
 from rer.cookieconsent.controlpanel.interfaces import CookieBannerEntry
 
 
+@implementer(IBody)
 class CookieConsentXMLAdapter(XMLAdapterBase):
     """In- and exporter for a local custom menu configuration
     """
-    implements(IBody)
     adapts(IComponentRegistry, ISetupEnviron)
 
     name = 'cookieconsent'
